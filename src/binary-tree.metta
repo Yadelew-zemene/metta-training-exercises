@@ -42,11 +42,41 @@
        (or (is-member $x $l)
            (is-member $x $r))))
 
+;;helper
+(= (append () $ys) $ys)
+(= (append (Cons $x $xs) $ys)
+(Cons $x (append $xs $ys)))
+;; inorder transeversal
+(= (inorder leaf) ())
+(= (inorder (Cons $value $left $right))
+    (append (inorder $left)
+            (Cons $value (inorder $right))
+))
+
+;;preorder tree traversal
+(= (preorder leaf) ())
+(= (preorder (Cons $value $left $right))
+    (append (Cons $value (preorder $left))
+            (preorder $right)
+))
+;; post order
+(= (postorder leaf) ())
+(= (postorder (Cons $value $left $right)) 
+   (append 
+         (append (postorder $left)
+                 (postorder $right))
+         (Cons $value ())        
+        
+    ))
+
 !(get-root (binary-tree))
 !(get-left  (binary-tree))
 !(get-right (binary-tree))
 !(size (binary-tree))
 !(is-member 5  (binary-tree) )
+!(inorder (binary-tree))
+!(preorder (binary-tree))
+!(postorder (binary-tree))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; results
@@ -56,6 +86,9 @@
 ; [(Cons 8 (Cons 14 leaf leaf) (Cons 17 leaf leaf))]
 ; [7]
 ; [True]
+;[(Cons 4 (Cons 5 (Cons 7 (Cons 6 (Cons 14 (Cons 8 (Cons 17 ())))))))]
+;[(Cons 6 (Cons 5 (Cons 4 (Cons 7 (Cons 8 (Cons 14 (Cons 17 ())))))))]
+;[(Cons 4 (Cons 7 (Cons 5 (Cons 14 (Cons 17 (Cons 8 (Cons 6 ())))))))]
 
 
 
