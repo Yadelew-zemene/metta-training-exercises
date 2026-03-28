@@ -4,7 +4,6 @@
 This project implements list and  basic binary tree data structures in MeTTa:
 
 ## 📌 Features
-
 ### List
 - length
 - append

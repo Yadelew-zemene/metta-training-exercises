@@ -30,7 +30,7 @@
 (= (push $x $list)
    (Cons $x $list))
 (=(pop ()) ())
-(=(pop (Cons $x $xs)) $xs)
+(=(pop (Cons $x $xs)) ($x $xs))
 
 
 ;;assumed with list has at leasin one element
@@ -133,6 +133,58 @@
 
 ;;foldr helper function
 (= (sum $z $y) (+ $z $y))
+;;sum list 
+(= (sum-list ()) 0)
+(= (sum-list (Cons $x $xs))
+      (+ $x (sum-list $xs)))
+
+
+;product
+(= (product ()) 1)
+(= (product (Cons $x $xs))
+(* $x (product $xs))
+)
+
+
+;;;;util to get all postive ffom list
+(= (util ()) ())
+(= (util (Cons $x $xs))
+(if (> $x 0) (Cons $x (util $xs))
+   (util $xs)))
+
+;;compose
+(= (compose $f $g)
+   (Composed $f $g))
+
+(= ((Composed $f $g) $value)
+($f ($g $value)))
+
+;;compose function arguments example
+
+(= (cube $x) (* $x (* $x $x)))
+(= (half $x) (/ $x 2))
+;;;
+
+;;curry2
+(= (curry2 $f)
+  (Curried2 $f))
+
+(= ((Curried2 $f) $value)
+  (Partial2 $f $value))
+
+ (= ((Partial2  $f $val1) $val2)
+    ($f $val1 $val2))
+
+;;;;;;
+;;three argument curry
+
+;;count a memeber
+(: count (-> Number List Number))
+(= (count $x ()) 0)
+(= (count $n (Cons $x $xs))
+   (if (== $n $x) (+ 1 (count $n $xs))
+                (count $n $xs)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -154,6 +206,9 @@
 !(foldl product 1 (list))
 !(foldr sum 0 (Cons 2 (list)))
 !(sort (list))
+!(sum-list (list))
+!(product (list))
+!(util (list))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;results
@@ -163,7 +218,7 @@
 ;[6]
 ;[True]
 ;[(Cons 20 (Cons 11 (Cons 14 (Cons 54 (Cons 34 (Cons 11 (Cons -1 ())))))))]
-;[(Cons 14 (Cons 54 (Cons 34 (Cons 11 (Cons -1 ())))))]
+;[11 (Cons 14 (Cons 54 (Cons 34 (Cons 11 (Cons -1 ())))))]
 ;[(Cons 10 (Cons 30 (Cons 11 (Cons 14 (Cons 54 (Cons 34 (Cons 11 (Cons -1 ()))))))))]
 ;[54]
 ;[-1]
@@ -175,6 +230,12 @@
 ;[-3110184]
 ;[125]
 ;[(Cons -1 (Cons 11 (Cons 11 (Cons 14 (Cons 34 (Cons 54 ()))))))]
+;[123]
+;[-3110184]
+;[(Cons 11 (Cons 14 (Cons 54 (Cons 34 (Cons 11 ())))))]
+;[500]
+;[2]
+;[60]
 
 
 
