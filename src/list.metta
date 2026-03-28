@@ -176,7 +176,25 @@
     ($f $val1 $val2))
 
 ;;;;;;
-;;three argument curry
+;three argument curry
+
+(= (curry $f)
+   (Curried $f))
+
+(= ((Curried $f) $val1)
+   (Partial3a $f $val1))
+
+(= ((Partial3a $f $val1) $val2)
+    (Partial3b $f $val1 $val2))
+
+(= ((Partial3b $f $val1 $val2) $val3) 
+   ($f $val1 $val2 $val3))
+
+;;curry helper that take 3 numbers and return max of them
+
+(: help (-> Number Number Number Number))
+(= (help $x $y $z)
+   (max-value (Cons $x (Cons $y (Cons $z ())))))
 
 ;;count a memeber
 (: count (-> Number List Number))
@@ -236,6 +254,7 @@
 ;[500]
 ;[2]
 ;[60]
+;[25]
 
 
 
