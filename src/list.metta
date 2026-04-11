@@ -1,8 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Type ana data definations of the list
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(: List Type)
-(: Cons (-> Number List List))
+(: List Type Type)
+(: Cons (-> $any (List $any) (List $any)))
 
 (= (list) (Cons 11 (Cons 14 (Cons 54 (Cons 34 (Cons 11 (Cons -1 ())))))))
 (=(list2) (Cons 10 (Cons 30 ())))
@@ -146,18 +146,22 @@
 )
 
 
-;;;;util to get all postive ffom list
-(= (util ()) ())
-(= (util (Cons $x $xs))
-(if (> $x 0) (Cons $x (util $xs))
-   (util $xs)))
+;;;;
+ (: until (-> (-> $a Bool) (-> $a $a) $a $a))
+(= (until $p $f $x )
+(if ($p $x)
+     $x
+     (until $p $f ($f $x))
+     ))
+(= (less-than-one $x)
+  (<= $x 1) )
 
-;;compose
-(= (compose $f $g)
-   (Composed $f $g))
+;;;;;;;
 
-(= ((Composed $f $g) $value)
-($f ($g $value)))
+
+;;compose  simplified
+(= ((compose $f $g) $value)
+   ($f ($g $value)))
 
 ;;compose function arguments example
 
@@ -165,25 +169,19 @@
 (= (half $x) (/ $x 2))
 ;;;
 
-;;curry2
-(= (curry2 $f)
-  (Curried2 $f))
+;;curry2 simplified
 
-(= ((Curried2 $f) $value)
-  (Partial2 $f $value))
-
- (= ((Partial2  $f $val1) $val2)
+(= ((curry2 $f) $val1)
+  (Partial $val1))
+(= ((Partial  $f $val1) $val2)
     ($f $val1 $val2))
 
 ;;;;;;
-;three argument curry
+;three argument curry simplified
 
-(= (curry $f)
-   (Curried $f))
-
-(= ((Curried $f) $val1)
-   (Partial3a $f $val1))
-
+(= ((curry $f) $val1)
+   (Partial3a $f val1))
+   
 (= ((Partial3a $f $val1) $val2)
     (Partial3b $f $val1 $val2))
 
@@ -226,7 +224,7 @@
 !(sort (list))
 !(sum-list (list))
 !(product (list))
-!(util (list))
+!(until less-than-one half 100)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;results
