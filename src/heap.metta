@@ -156,6 +156,11 @@
 ;[(Cons 1 (Cons 2 (Cons 4 (Cons 3 (Cons 5 Nil)))))]
 ;[4]
 ;[(Cons 0 (Cons 2 (Cons 1 (Cons 3 (Cons 5 (Cons 4 Nil)))))), (Cons 0 (Cons 2 (Cons 1 (Cons 3 (Cons 5 (Cons 4 Nil))))))]
+;;;;;;;;;;;;;metta non-deterministic
 ;[(Cons 2 (Cons 3 (Cons 4 (Cons 5 Nil))))]
 ;[(Cons 1 (Cons 2 (Cons 3 (Cons 4 (Cons 5 Nil)))))]
+
+
+
+
 
